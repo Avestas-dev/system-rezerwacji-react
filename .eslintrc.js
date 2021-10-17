@@ -22,5 +22,6 @@ module.exports = {
   rules: {
     semi: 'off',
     'no-unused-vars': 'warn',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 }
