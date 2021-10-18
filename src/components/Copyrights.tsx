@@ -6,7 +6,7 @@ function Copyright(props: any) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/">
-        Pracownia problemowa - projekt
+        Kamil Poręba, Paweł Szantula, Konrad Żak, Szymon Uzdowski
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

@@ -5,13 +5,16 @@ function Navbar() {
   return (
     <>
       <Link style={{ marginRight: 10 }} href="/">
-        Home
+        Główna
       </Link>
       <Link style={{ marginRight: 10 }} href="/login">
-        Login
+        Logowanie
       </Link>
       <Link style={{ marginRight: 10 }} href="/register">
-        Register
+        Rejestracja
+      </Link>
+      <Link style={{ marginRight: 10 }} href="/specialists">
+        Specjaliści
       </Link>
     </>
   )

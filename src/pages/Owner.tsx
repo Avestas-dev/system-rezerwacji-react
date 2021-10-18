@@ -2,13 +2,13 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 /** @jsxImportSource @emotion/react */
 import 'twin.macro'
-function Home() {
+function Owner() {
   return (
     <div>
       <Navbar />
-      <p tw="font-bold text-center text-5xl ">Strona startowa</p>
+      <p tw="text-center text-5xl font-bold">Owner</p>
     </div>
   )
 }
 
-export default Home
+export default Owner

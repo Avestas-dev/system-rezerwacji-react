@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -11,23 +11,59 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Copyright from './Copyrights'
+import axios from 'axios'
+import { useMutation } from 'react-query'
+import { loginModel } from '../models/loginModel'
+import { Alert, AlertColor, Snackbar } from '@mui/material'
+import { Redirect } from 'react-router-dom'
 
 const theme = createTheme()
 
 export default function SignIn() {
+  const [open, setOpen] = useState(false)
+  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
+  const [redirect, setRedirect] = useState(false)
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const loginMutation = useMutation(
+    (loginUser: loginModel) => {
+      return axios.post('http://localhost:3001/login', loginUser)
+    },
+    {
+      onSuccess: () => {
+        setSeverity('success')
+        setOpen(true)
+        setMessage('Pomyślnie zalogowano.')
+        const delayedFunction = () => setRedirect(true)
+        setTimeout(delayedFunction, 1000)
+      },
+      onError: (err) => {
+        console.log(err)
+      },
+    },
+  )
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget)
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    loginMutation.mutate({
+      email: formData.get('email')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
     })
   }
 
   return (
     <ThemeProvider theme={theme}>
+      {redirect && <Redirect to={{ pathname: '/specialists', state: { showToast: true } }} />}
       <Container component="main" maxWidth="xs">
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+            {message}
+          </Alert>
+        </Snackbar>
         <CssBaseline />
         <Box
           sx={{
@@ -37,8 +73,8 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
+            <LockOutlinedIcon htmlColor="#FFFFFF" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Zaloguj się
@@ -64,7 +100,18 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+
+            <Button
+              disabled={loginMutation.isLoading}
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: open && severity === 'success' ? 'green' : 'blue',
+              }}
+            >
               Zaloguj się
             </Button>
             <Grid container>

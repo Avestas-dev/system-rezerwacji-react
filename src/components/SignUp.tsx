@@ -1,10 +1,8 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -13,23 +11,74 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Copyright from './Copyrights'
+import { useMutation } from 'react-query'
+import axios, { AxiosError } from 'axios'
+import { Alert, AlertColor, Snackbar } from '@mui/material'
+import { Redirect } from 'react-router'
+import { registerModel } from '../models/registerModel'
 
 const theme = createTheme()
 
 export default function SignUp() {
+  const [open, setOpen] = useState(false)
+  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
+  const [redirect, setRedirect] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const registerMutation = useMutation(
+    (newUser: registerModel) => {
+      return axios.post('http://localhost:3001/register', newUser)
+    },
+    {
+      onSuccess: () => {
+        setSeverity('success')
+        setOpen(true)
+        setMessage('Pomyślnie zarejestrowano.')
+        const delayedFunction = () => setRedirect(true)
+        setTimeout(delayedFunction, 1000)
+      },
+      onError: (err: AxiosError) => {
+        setSeverity('error')
+        setOpen(true)
+        switch (err.request.status) {
+          case 400:
+            setMessage('Wszystkie pola muszą być wypełnione')
+            break
+          case 409:
+            setMessage('Użytkownik o takim adresie email istnieje')
+            break
+          default:
+            setMessage('Wystąpił błąd przy rejestracji')
+            break
+        }
+      },
+    },
+  )
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget)
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    registerMutation.mutate({
+      email: formData.get('email')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
+      firstName: formData.get('firstName')?.toString() || '',
+      lastName: formData.get('lastName')?.toString() || '',
+      phone: formData.get('telephone')?.toString() || '',
     })
   }
 
   return (
     <ThemeProvider theme={theme}>
+      {redirect && <Redirect to={{ pathname: '/specialists', state: { showToast: true } }} />}
       <Container component="main" maxWidth="xs">
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+            {message}
+          </Alert>
+        </Snackbar>
         <CssBaseline />
         <Box
           sx={{
@@ -39,8 +88,8 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
+            <LockOutlinedIcon htmlColor="#FFFFFF" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Zarejestruj się
@@ -82,6 +131,16 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  name="telephone"
+                  label="Telefon"
+                  id="telephone"
+                  autoComplete="telephone"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Hasło"
                   type="password"
@@ -90,7 +149,17 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              disabled={registerMutation.isLoading}
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: open && severity === 'success' ? 'green' : 'blue',
+              }}
+            >
               Zarejestruj się
             </Button>
 
