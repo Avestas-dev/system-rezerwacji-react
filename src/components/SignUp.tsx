@@ -32,12 +32,10 @@ export default function SignUp() {
       return axios.post('http://localhost:3001/register', newUser)
     },
     {
-      onSuccess: () => {
-        setSeverity('success')
-        setOpen(true)
-        setMessage('Pomyślnie zarejestrowano.')
-        const delayedFunction = () => setRedirect(true)
-        setTimeout(delayedFunction, 1000)
+      onSuccess: (res: any) => {
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('role', res.data.role)
+        window.location.href = 'http://localhost:3000/specialists'
       },
       onError: (err: AxiosError) => {
         setSeverity('error')

@@ -33,15 +33,15 @@ export default function SignIn() {
       return axios.post('http://localhost:3001/login', loginUser)
     },
     {
-      onSuccess: () => {
-        setSeverity('success')
-        setOpen(true)
-        setMessage('Pomyślnie zalogowano.')
-        const delayedFunction = () => setRedirect(true)
-        setTimeout(delayedFunction, 1000)
+      onSuccess: (res: any) => {
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('role', res.data.role)
+        window.location.href = 'http://localhost:3000/specialists'
       },
-      onError: (err) => {
-        console.log(err)
+      onError: () => {
+        setSeverity('error')
+        setOpen(true)
+        setMessage('Błędne dane logowania.')
       },
     },
   )

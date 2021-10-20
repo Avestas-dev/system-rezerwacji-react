@@ -1,25 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Navbar from '../components/Navbar'
 /** @jsxImportSource @emotion/react */
 import 'twin.macro'
 import { Alert, Snackbar } from '@mui/material'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+
 function Specialists(props: any) {
-  // const [open, setOpen] = useState(props?.location?.state?.showToast || false)
-  console.log(JSON.stringify(props))
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
+  const token = localStorage.getItem('token')
+
+  const { data, isLoading, isSuccess } = useQuery(['specialists'], () =>
+    axios.get('/specialists').then((res) => {
+      console.log(res)
+      return res.data
+    }),
+  )
+  console.log(data)
   return (
     <div>
-      {/* {props.location.state.showToast && (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={() => setOpen} severity={'success'} sx={{ width: '100%' }}>
-            Pomyślnie zarejestrowano
-          </Alert>
-        </Snackbar>
-      )} */}
-      <Navbar />
-      <p tw="text-center text-5xl font-bold">Specjaliści</p>
+      {isSuccess && (
+        <>
+          <Navbar />
+          <p tw="text-center text-5xl font-bold">Specjaliści</p>
+        </>
+      )}
     </div>
   )
 }

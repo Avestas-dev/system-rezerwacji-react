@@ -1,20 +1,23 @@
-import { Link } from '@mui/material'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
   return (
     <>
-      <Link style={{ marginRight: 10 }} href="/">
+      <Link style={{ marginRight: 10 }} to="/">
         Główna
       </Link>
-      <Link style={{ marginRight: 10 }} href="/login">
-        Logowanie
+      <Link style={{ marginRight: 10 }} to="/login">
+        Login
       </Link>
-      <Link style={{ marginRight: 10 }} href="/register">
+      <Link style={{ marginRight: 10 }} to="/register">
         Rejestracja
       </Link>
-      <Link style={{ marginRight: 10 }} href="/specialists">
+      <Link style={{ marginRight: 10 }} to="/specialists">
         Specjaliści
+      </Link>
+      <Link style={{ marginRight: 10 }} to="/logout">
+        Logout
       </Link>
     </>
   )
