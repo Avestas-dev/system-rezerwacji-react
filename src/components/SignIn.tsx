@@ -15,15 +15,14 @@ import axios from 'axios'
 import { useMutation } from 'react-query'
 import { loginModel } from '../models/loginModel'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
-import { Redirect } from 'react-router-dom'
-
+import { useHistory } from 'react-router'
 const theme = createTheme()
 
 export default function SignIn() {
   const [open, setOpen] = useState(false)
   const [severity, setSeverity] = useState<AlertColor>('success')
   const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
-  const [redirect, setRedirect] = useState(false)
+  const routerHistory = useHistory()
 
   const handleClose = () => {
     setOpen(false)
@@ -36,7 +35,7 @@ export default function SignIn() {
       onSuccess: (res: any) => {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('role', res.data.role)
-        window.location.href = 'http://localhost:3000/specialists'
+        routerHistory.push('/specialists')
       },
       onError: () => {
         setSeverity('error')
@@ -57,7 +56,6 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      {redirect && <Redirect to={{ pathname: '/specialists', state: { showToast: true } }} />}
       <Container component="main" maxWidth="xs">
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
