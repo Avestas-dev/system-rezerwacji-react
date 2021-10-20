@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 
 interface userContextModel {
   id: number
@@ -9,12 +10,14 @@ interface userContextModel {
   role: string
   email: string
   token: string
+  phone: string
 }
 
 export const initData = {
   id: 0,
   firstName: '',
   lastName: '',
+  phone: '',
   role: '',
   email: '',
   token: '',

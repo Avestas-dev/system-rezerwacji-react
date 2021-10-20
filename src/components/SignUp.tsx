@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -17,6 +17,7 @@ import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { Redirect } from 'react-router'
 import { registerModel } from '../models/registerModel'
 import { useHistory } from 'react-router'
+import UserContext from '../common/UserContext'
 
 const theme = createTheme()
 
@@ -24,8 +25,9 @@ export default function SignUp() {
   const [open, setOpen] = useState(false)
   const [severity, setSeverity] = useState<AlertColor>('success')
   const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
-  const [redirect, setRedirect] = useState(false)
+  const [redirect] = useState(false)
   const routerHistory = useHistory()
+  const userContext = useContext(UserContext)
 
   const handleClose = () => {
     setOpen(false)
@@ -38,6 +40,7 @@ export default function SignUp() {
       onSuccess: (res: any) => {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('role', res.data.role)
+        userContext.setUser(res.data)
         routerHistory.push('/specialists')
       },
       onError: (err: AxiosError) => {

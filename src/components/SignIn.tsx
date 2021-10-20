@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -16,6 +16,7 @@ import { useMutation } from 'react-query'
 import { loginModel } from '../models/loginModel'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { useHistory } from 'react-router'
+import UserContext from '../common/UserContext'
 const theme = createTheme()
 
 export default function SignIn() {
@@ -23,6 +24,7 @@ export default function SignIn() {
   const [severity, setSeverity] = useState<AlertColor>('success')
   const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
   const routerHistory = useHistory()
+  const userContext = useContext(UserContext)
 
   const handleClose = () => {
     setOpen(false)
@@ -35,6 +37,8 @@ export default function SignIn() {
       onSuccess: (res: any) => {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('role', res.data.role)
+
+        userContext.setUser(res.data)
         routerHistory.push('/specialists')
       },
       onError: () => {
