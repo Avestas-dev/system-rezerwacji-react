@@ -23,6 +23,7 @@
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.26.1",
+    "material-ui-popup-state": "^2.0.0",
     "postcss": "^8.3.9",
     "postcss-loader": "^6.2.0",
     "prettier": "^2.4.1",
