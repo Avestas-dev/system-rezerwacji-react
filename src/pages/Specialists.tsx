@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 /** @jsxImportSource @emotion/react */
 import 'twin.macro'
-import { Alert, Snackbar } from '@mui/material'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { useLocation } from 'react-router'
 
 function Specialists(props: any) {
-  const token = localStorage.getItem('token')
-
-  const { data, isLoading, isSuccess } = useQuery(['specialists'], () =>
+  const location = useLocation()
+  console.log(location)
+  useEffect(() => {
+    console.log(JSON.stringify(location))
+  }, [location])
+  const { data, isSuccess } = useQuery(['specialists'], () =>
     axios.get('/specialists').then((res) => {
       console.log(res)
       return res.data

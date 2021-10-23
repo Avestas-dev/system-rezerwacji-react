@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -21,7 +21,7 @@ const theme = createTheme()
 
 export default function SignIn() {
   const [open, setOpen] = useState(false)
-  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [severity, setSeverity] = useState<AlertColor>('info')
   const [message, setMessage] = useState('Pomyślnie zarejestrowano.')
   const routerHistory = useHistory()
   const userContext = useContext(UserContext)
@@ -29,6 +29,7 @@ export default function SignIn() {
   const handleClose = () => {
     setOpen(false)
   }
+
   const loginMutation = useMutation(
     (loginUser: loginModel) => {
       return axios.post('http://localhost:3001/login', loginUser)
@@ -37,9 +38,11 @@ export default function SignIn() {
       onSuccess: (res: any) => {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('role', res.data.role)
-
         userContext.setUser(res.data)
-        routerHistory.push('/specialists')
+        setSeverity('success')
+        setOpen(true)
+        setMessage('Logowanie pomyślne.')
+        routerHistory.push({ pathname: '/specialists', state: { isSuccess: true } })
       },
       onError: () => {
         setSeverity('error')
@@ -66,7 +69,6 @@ export default function SignIn() {
             {message}
           </Alert>
         </Snackbar>
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,

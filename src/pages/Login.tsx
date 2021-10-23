@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import UserContext from '../common/UserContext'
+import React from 'react'
+
 import Navbar from '../components/Navbar'
 import SignIn from '../components/SignIn'
 

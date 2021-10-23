@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import resetUserStorage from '../utils/resetUseStorage'
-
+import resetUserStorage from '../utils/resetUserStorage'
+import { useHistory } from 'react-router'
+import { clearUserContext } from '../common/UserContext'
 const Logout = () => {
   resetUserStorage()
-  //TODO: change this to env variable
-  window.location.href = 'http://localhost:3000/'
+  clearUserContext()
+  const routerHistory = useHistory()
+  useEffect(() => {
+    routerHistory.push('/')
+  }, [])
   return (
     <div>
       <Navbar />

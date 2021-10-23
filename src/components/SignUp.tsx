@@ -83,7 +83,6 @@ export default function SignUp() {
             {message}
           </Alert>
         </Snackbar>
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,

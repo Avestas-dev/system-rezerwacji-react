@@ -1,13 +1,18 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
+
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Logout from '../pages/Logout'
 import Register from '../pages/Register'
 import Specialists from '../pages/Specialists'
 import Unauthorized from '../pages/Unauthorized'
+import ContextUpdate from './ContextUpdate'
 
 const Navigation = () => {
+  // TODO: make separate endpoint for this
+  ;<ContextUpdate />
+
   return (
     <Switch>
       <Route path="/" component={Home} exact />
