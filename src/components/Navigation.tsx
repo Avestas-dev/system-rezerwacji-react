@@ -7,11 +7,8 @@ import Logout from '../pages/Logout'
 import Register from '../pages/Register'
 import Specialists from '../pages/Specialists'
 import Unauthorized from '../pages/Unauthorized'
-import ContextUpdate from './ContextUpdate'
 
 const Navigation = () => {
-  // TODO: make separate endpoint for this
-
   return (
     <Switch>
       <Route path="/" component={Home} exact />

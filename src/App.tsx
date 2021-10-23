@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Navigation from './components/Navigation'
 import UserContext, { initData } from './common/UserContext'
 import { ConfigProvider } from 'react-avatar'
-import ContextUpdate from './components/ContextUpdate'
+import UserContextUpdate from './components/UserContextUpdate'
 import { BrowserRouter } from 'react-router-dom'
 const queryClient = new QueryClient()
 
@@ -14,10 +14,10 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ConfigProvider colors={['red', 'green', 'gray']}>
+        <ConfigProvider colors={['red', 'green']}>
           <main>
             <UserContext.Provider value={{ user, setUser }}>
-              <ContextUpdate />
+              <UserContextUpdate />
               <Navigation />
             </UserContext.Provider>
           </main>

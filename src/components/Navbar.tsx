@@ -3,12 +3,9 @@ import React, { useContext } from 'react'
 import UserContext from '../common/UserContext'
 /** @jsxImportSource @emotion/react */
 import 'twin.macro'
-import LoginIcon from '@mui/icons-material/Login'
-import LogoutIcon from '@mui/icons-material/Logout'
 import Avatar from 'react-avatar'
-import { Button, Menu, MenuItem } from '@mui/material'
+import { Menu, MenuItem } from '@mui/material'
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state'
-import ContextUpdate from './ContextUpdate'
 import NavLink from './NavLink'
 
 function Navbar() {
@@ -19,7 +16,6 @@ function Navbar() {
       <div tw="flex">
         <NavLink to="/">Główna</NavLink>
         <NavLink to="/register">Rejestracja</NavLink>
-
         {userContext.user.firstName && <NavLink to="/specialists">Specjaliści</NavLink>}
       </div>
       <div tw="flex ml-auto ">
@@ -36,9 +32,9 @@ function Navbar() {
                 />
 
                 <Menu {...bindMenu(popupState)}>
-                  <MenuItem>
-                    <NavLink to="/logout">Logout</NavLink>
-                  </MenuItem>
+                  <NavLink marginRight={0} to="/logout">
+                    <MenuItem>Logout</MenuItem>
+                  </NavLink>
                 </Menu>
               </>
             )}

@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useQuery } from 'react-query'
 import UserContext from '../common/UserContext'
 
-const ContextUpdate = () => {
+const UserContextUpdate = () => {
   const userContext = useContext(UserContext)
   const token = localStorage.getItem('token')
 
@@ -22,4 +22,4 @@ const ContextUpdate = () => {
   return <div />
 }
 
-export default ContextUpdate
+export default UserContextUpdate
