@@ -11,7 +11,6 @@ import ContextUpdate from './ContextUpdate'
 
 const Navigation = () => {
   // TODO: make separate endpoint for this
-  ;<ContextUpdate />
 
   return (
     <Switch>

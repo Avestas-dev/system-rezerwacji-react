@@ -1,11 +1,15 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+
 import UserContext from '../common/UserContext'
 /** @jsxImportSource @emotion/react */
 import 'twin.macro'
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import Avatar from 'react-avatar'
+import { Button, Menu, MenuItem } from '@mui/material'
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state'
+import ContextUpdate from './ContextUpdate'
+import NavLink from './NavLink'
 
 function Navbar() {
   const userContext = useContext(UserContext)
@@ -13,40 +17,37 @@ function Navbar() {
   return (
     <div tw="bg-blue-800 text-white pt-5 pb-5 pl-3 pr-3 w-screen flex mb-5">
       <div tw="flex">
-        <Link style={{ marginRight: 13 }} to="/">
-          Główna
-        </Link>
+        <NavLink to="/">Główna</NavLink>
+        <NavLink to="/register">Rejestracja</NavLink>
 
-        <Link style={{ marginRight: 13 }} to="/register">
-          Rejestracja
-        </Link>
-
-        {userContext.user.firstName && (
-          <Link style={{ marginRight: 13 }} to="/specialists">
-            Specjaliści
-          </Link>
-        )}
+        {userContext.user.firstName && <NavLink to="/specialists">Specjaliści</NavLink>}
       </div>
-      <div tw="flex ml-auto">
+      <div tw="flex ml-auto ">
         {userContext.user.firstName && (
-          <Link style={{ marginRight: 13 }} to="/logout">
-            <Avatar
-              name={userContext.user.firstName + ' ' + userContext.user.lastName}
-              size="20"
-              tw="mr-2"
-              round
-            />
-            Logout
-            <LogoutIcon sx={{ color: 'white' }} tw="ml-1" />
-          </Link>
+          <PopupState variant="popover" popupId="demo-popup-menu">
+            {(popupState) => (
+              <>
+                <Avatar
+                  name={userContext.user.firstName + ' ' + userContext.user.lastName}
+                  size="25"
+                  tw="mr-2"
+                  round
+                  {...bindTrigger(popupState)}
+                />
+
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem>
+                    <NavLink to="/logout">Logout</NavLink>
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
+          </PopupState>
         )}
         {!userContext.user.firstName && (
-          <Link tw="inline" style={{ marginRight: 13 }} to="/login">
-            <div tw="flex">
-              Login
-              <LoginIcon sx={{ color: 'white' }} tw="ml-1" />
-            </div>
-          </Link>
+          <NavLink tw="inline" to="/login">
+            <div tw="flex">Login</div>
+          </NavLink>
         )}
       </div>
     </div>

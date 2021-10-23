@@ -7,14 +7,17 @@ const ContextUpdate = () => {
   const userContext = useContext(UserContext)
   const token = localStorage.getItem('token')
 
-  useQuery('context-fill', () =>
-    axios.get('/user-by-token').then((res: any) => {
-      if (res && res?.data) {
-        if (token) {
-          userContext.setUser(res.data)
+  useQuery(
+    'context-fill',
+    () =>
+      axios.get('/user-by-token').then((res: any) => {
+        if (res && res?.data) {
+          if (token) {
+            userContext.setUser(res.data)
+          }
         }
-      }
-    }),
+      }),
+    { enabled: !!token },
   )
   return <div />
 }
