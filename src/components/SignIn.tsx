@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
@@ -13,10 +12,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Copyright from './Copyrights'
 import axios from 'axios'
 import { useMutation } from 'react-query'
-import { loginModel } from '../models/loginModel'
+import { loginModelRequest } from '../models/loginModelRequest'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { useHistory } from 'react-router'
 import UserContext from '../common/UserContext'
+import { loginModelResponse } from '../models/loginModelResponse'
 const theme = createTheme()
 
 export default function SignIn() {
@@ -30,15 +30,16 @@ export default function SignIn() {
     setOpen(false)
   }
 
-  const loginMutation = useMutation(
-    (loginUser: loginModel) => {
+  const loginMutation = useMutation<loginModelResponse, unknown, loginModelRequest>(
+    (loginUser) => {
       return axios.post('http://localhost:3001/login', loginUser)
     },
     {
-      onSuccess: (res: any) => {
-        localStorage.setItem('token', res.data.token)
-        localStorage.setItem('role', res.data.role)
-        userContext.setUser(res.data)
+      onSuccess: ({ data }) => {
+        console.log(data)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('role', data.role.toString())
+        userContext.setUser(data)
         setSeverity('success')
         setOpen(true)
         setMessage('Logowanie pomyślne.')

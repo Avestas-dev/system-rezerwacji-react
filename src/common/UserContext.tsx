@@ -2,23 +2,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useEffect } from 'react'
-
-interface userContextModel {
-  id: number
-  firstName: string
-  lastName: string
-  role: string
-  email: string
-  token: string
-  phone: string
-}
+import { roleEnum } from '../enums/enums'
+import { userContextModel } from '../models/userContextModel'
 
 export const initData = {
   id: 0,
   firstName: '',
   lastName: '',
   phone: '',
-  role: '',
+  role: roleEnum.none,
   email: '',
   token: '',
 }

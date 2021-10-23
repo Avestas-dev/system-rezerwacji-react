@@ -5,8 +5,8 @@ import 'twin.macro'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { useLocation } from 'react-router'
-
-function Specialists(props: any) {
+//TODO: Add toast for displaying success after login
+const Specialists = () => {
   const location = useLocation()
   console.log(location)
   useEffect(() => {
@@ -14,7 +14,7 @@ function Specialists(props: any) {
   }, [location])
   const { data, isSuccess } = useQuery(['specialists'], () =>
     axios.get('/specialists').then((res) => {
-      console.log(res)
+      console.log(res.data)
       return res.data
     }),
   )

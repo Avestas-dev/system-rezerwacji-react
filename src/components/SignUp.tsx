@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
@@ -15,9 +14,10 @@ import { useMutation } from 'react-query'
 import axios, { AxiosError } from 'axios'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { Redirect } from 'react-router'
-import { registerModel } from '../models/registerModel'
+import { registerModelRequest } from '../models/registerModelRequest'
 import { useHistory } from 'react-router'
 import UserContext from '../common/UserContext'
+import { registerModelResponse } from '../models/registerModelResponse'
 
 const theme = createTheme()
 
@@ -32,18 +32,18 @@ export default function SignUp() {
   const handleClose = () => {
     setOpen(false)
   }
-  const registerMutation = useMutation(
-    (newUser: registerModel) => {
+  const registerMutation = useMutation<registerModelResponse, AxiosError, registerModelRequest>(
+    (newUser) => {
       return axios.post('http://localhost:3001/register', newUser)
     },
     {
-      onSuccess: (res: any) => {
+      onSuccess: (res) => {
         localStorage.setItem('token', res.data.token)
-        localStorage.setItem('role', res.data.role)
+        localStorage.setItem('role', res.data.role.toString())
         userContext.setUser(res.data)
         routerHistory.push('/specialists')
       },
-      onError: (err: AxiosError) => {
+      onError: (err) => {
         setSeverity('error')
         setOpen(true)
         switch (err.request.status) {
