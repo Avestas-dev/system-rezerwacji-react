@@ -1,5 +1,3 @@
-import { roleEnum } from '../enums/enums'
-
 export interface loginModelResponse {
   data: {
     email: string
@@ -7,7 +5,7 @@ export interface loginModelResponse {
     id: number
     lastName: string
     phone: string
-    role: roleEnum
+    role: string
     token: string
   }
 }

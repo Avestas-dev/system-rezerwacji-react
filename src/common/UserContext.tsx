@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useEffect } from 'react'
-import { roleEnum } from '../enums/enums'
 import { userContextModel } from '../models/userContextModel'
 
 export const initData = {
@@ -10,7 +9,7 @@ export const initData = {
   firstName: '',
   lastName: '',
   phone: '',
-  role: roleEnum.none,
+  role: '',
   email: '',
   token: '',
 }

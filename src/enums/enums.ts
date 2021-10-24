@@ -1,6 +1,5 @@
-export enum roleEnum {
-  'client',
-  'specialist',
-  'owner',
-  'none',
+export enum jobEnum {
+  'dentist',
+  'doctor',
+  'vet',
 }
