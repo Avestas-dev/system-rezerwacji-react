@@ -32,11 +32,10 @@ export default function SignIn() {
 
   const loginMutation = useMutation<loginModelResponse, unknown, loginModelRequest>(
     (loginUser) => {
-      return axios.post('http://localhost:3001/login', loginUser)
+      return axios.post('/login', loginUser)
     },
     {
       onSuccess: ({ data }) => {
-        console.log(data)
         localStorage.setItem('token', data.token)
         localStorage.setItem('role', data.role.toString())
         userContext.setUser(data)

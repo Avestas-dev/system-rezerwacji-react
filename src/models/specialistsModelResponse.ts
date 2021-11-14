@@ -4,5 +4,7 @@ export interface specialistsModelResponse {
   user: {
     firstName: string
     lastName: string
+    email: string
+    phone: string
   }
 }

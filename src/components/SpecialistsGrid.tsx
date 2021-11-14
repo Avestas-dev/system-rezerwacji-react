@@ -10,7 +10,6 @@ interface SpecialistsGridProps {
 }
 
 const SpecialistsGrid = ({ data }: SpecialistsGridProps) => {
-  console.log(data)
   return (
     <Grid container spacing={3} alignItems="center" justifyContent="center">
       {data?.map((specialist) => (

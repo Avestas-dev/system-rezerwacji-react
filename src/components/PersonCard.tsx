@@ -5,9 +5,11 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
-import doctor from '../assets/doctor.png'
-import dentist from '../assets/dentist.png'
-import vet from '../assets/vet.jpg'
+
+import { getJobNameAndPhotoFromEnum } from '../utils/getJobNameAndPhotoFromEnum'
+import { useHistory } from 'react-router-dom'
+import { useContext } from 'react'
+import UserContext from '../common/UserContext'
 
 interface PersonCardProps {
   firstName: string
@@ -17,21 +19,11 @@ interface PersonCardProps {
   proportion?: number
 }
 
-// TODO: make this function not render on every change
-const getJobNameAndPhotoFromEnum = (job: string) => {
-  switch (job) {
-    case 'dentist':
-      return { name: 'Dentysta', img: dentist }
-    case 'doctor':
-      return { name: 'Doktor', img: doctor }
-    case 'vet':
-      return { name: 'Weterynarz', img: vet }
-    default:
-      return { name: 'Doktor', img: doctor }
-  }
-}
 //TODO: implement go to reservation page
 const PersonCard = ({ firstName, lastName, job, id, proportion = 1 }: PersonCardProps) => {
+  const routerHistory = useHistory()
+  const userContext = useContext(UserContext)
+
   return (
     <Card sx={{ padding: 0, maxWidth: 200 * proportion, marginLeft: 'auto', marginRight: 'auto' }}>
       <CardMedia
@@ -50,7 +42,19 @@ const PersonCard = ({ firstName, lastName, job, id, proportion = 1 }: PersonCard
           {getJobNameAndPhotoFromEnum(job).name}
         </Typography>
         <CardActions>
-          <Button size="small">Rezerwuj Wizytę</Button>
+          {userContext.user.role === 'client' && (
+            <Button
+              size="small"
+              onClick={() =>
+                routerHistory.push({
+                  pathname: `/specialist-visits/${id}`,
+                  state: { isSuccess: true },
+                })
+              }
+            >
+              Rezerwuj Wizytę
+            </Button>
+          )}
         </CardActions>
       </CardContent>
     </Card>

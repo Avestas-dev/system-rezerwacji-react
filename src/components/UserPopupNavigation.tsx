@@ -16,14 +16,14 @@ const UserPopupNavigation = () => {
           <Avatar
             name={userContext.user.firstName + ' ' + userContext.user.lastName}
             size="25"
-            tw="mr-2"
+            tw="mr-2 hover:(scale-110) cursor-pointer"
             round
             {...bindTrigger(popupState)}
           />
 
           <Menu {...bindMenu(popupState)}>
             <NavLink marginRight={0} to="/logout">
-              <MenuItem>Logout</MenuItem>
+              <MenuItem>Wyloguj</MenuItem>
             </NavLink>
           </Menu>
         </>

@@ -5,19 +5,48 @@ import UserContext from '../common/UserContext'
 import 'twin.macro'
 import NavLink from './NavLink'
 import UserPopupNavigation from './UserPopupNavigation'
+import SpecialistPopupPanelNavigation from './SpecialistPopupPanelNavigation'
+import { MenuItem } from '@mui/material'
 
 function Navbar() {
   const userContext = useContext(UserContext)
-  console.log(userContext.user.role)
   return (
     <div tw="bg-blue-800 text-white pt-5 pb-5 pl-3 pr-3 w-screen flex mb-5">
       <div tw="flex">
         <NavLink to="/">Główna</NavLink>
-        <NavLink to="/register">Rejestracja</NavLink>
+        {!userContext.user.firstName && <NavLink to="/register">Rejestracja</NavLink>}
         {userContext.user.firstName && <NavLink to="/specialists">Specjaliści</NavLink>}
+        {userContext.user.role === 'client' && (
+          <NavLink to="/user-reservations">Rezerwacje</NavLink>
+        )}
       </div>
-      {userContext.user.role === 'owner' && <NavLink to="/owner">Panel</NavLink>}
-
+      {userContext.user.role === 'owner' && (
+        <SpecialistPopupPanelNavigation>
+          <>
+            <NavLink disableActiveStyles marginRight={0} to="/specialists-list">
+              <MenuItem>Lista specjalistów</MenuItem>
+            </NavLink>
+            <NavLink disableActiveStyles marginRight={0} to="/specialist-add">
+              <MenuItem>Dodaj specjalistę</MenuItem>
+            </NavLink>
+          </>
+        </SpecialistPopupPanelNavigation>
+      )}
+      {userContext.user.role === 'specialist' && (
+        <SpecialistPopupPanelNavigation>
+          <>
+            <NavLink disableActiveStyles marginRight={0} to="/add-visit">
+              <MenuItem>Dodaj wizytę</MenuItem>
+            </NavLink>
+            <NavLink disableActiveStyles marginRight={0} to="/show-visits">
+              <MenuItem>Pokaż wizyty</MenuItem>
+            </NavLink>
+            <NavLink disableActiveStyles marginRight={0} to="/delete-visits">
+              <MenuItem>Usuń wizyty</MenuItem>
+            </NavLink>
+          </>
+        </SpecialistPopupPanelNavigation>
+      )}
       <div tw="flex ml-auto ">
         {userContext.user.firstName && <UserPopupNavigation />}
         {!userContext.user.firstName && (

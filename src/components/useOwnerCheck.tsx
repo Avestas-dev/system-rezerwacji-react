@@ -4,8 +4,10 @@ import UserContext from '../common/UserContext'
 const useOwnerCheck = () => {
   const userContext = useContext(UserContext)
   useLayoutEffect(() => {
-    userContext.user.role === 'owner'
-    window.location.href = 'http://localhost:3000/unauthorized'
+    if (userContext.user.role !== 'owner') {
+      console.log('something is wrong')
+      window.location.href = 'http://localhost:3000/unauthorized'
+    }
   }, [])
 }
 
