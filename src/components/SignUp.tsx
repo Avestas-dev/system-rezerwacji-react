@@ -169,126 +169,124 @@ export default function SignUp() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-            {message}
-          </Alert>
-        </Snackbar>
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
-            <LockOutlinedIcon htmlColor="#FFFFFF" />
-          </Avatar>
-          <Typography component="h1" variant="h5">
+    <Container component="main" maxWidth="xs">
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'blue' }}>
+          <LockOutlinedIcon htmlColor="#FFFFFF" />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Zarejestruj się
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={firstNameError}
+                helperText={firstNameHelperText}
+                autoComplete="given-name"
+                name="firstName"
+                required
+                fullWidth
+                id="firstName"
+                label="Imię"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={lastNameError}
+                helperText={firstNameHelperText}
+                required
+                fullWidth
+                id="lastName"
+                label="Nazwisko"
+                name="lastName"
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={emailError}
+                helperText={emailHelperText}
+                required
+                fullWidth
+                id="email"
+                label="Adres email"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={phoneError}
+                helperText={phoneHelperText}
+                required
+                fullWidth
+                name="telephone"
+                label="Telefon"
+                id="telephone"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={passwordError}
+                helperText={passwordHelperText}
+                required
+                fullWidth
+                name="password"
+                label="Hasło"
+                type="password"
+                id="password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={passwordRepeatedError}
+                helperText={passwordRepeatedHelperText}
+                required
+                fullWidth
+                name="passwordRepeated"
+                label="Hasło powtórzone"
+                type="password"
+                id="passwordRepeated"
+                autoComplete="new-password"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            disabled={registerMutation.isLoading}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: open && severity === 'success' ? 'green' : 'blue',
+            }}
+          >
             Zarejestruj się
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={firstNameError}
-                  helperText={firstNameHelperText}
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Imię"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={lastNameError}
-                  helperText={firstNameHelperText}
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Nazwisko"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={emailError}
-                  helperText={emailHelperText}
-                  required
-                  fullWidth
-                  id="email"
-                  label="Adres email"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={phoneError}
-                  helperText={phoneHelperText}
-                  required
-                  fullWidth
-                  name="telephone"
-                  label="Telefon"
-                  id="telephone"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={passwordError}
-                  helperText={passwordHelperText}
-                  required
-                  fullWidth
-                  name="password"
-                  label="Hasło"
-                  type="password"
-                  id="password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={passwordRepeatedError}
-                  helperText={passwordRepeatedHelperText}
-                  required
-                  fullWidth
-                  name="passwordRepeated"
-                  label="Hasło powtórzone"
-                  type="password"
-                  id="passwordRepeated"
-                  autoComplete="new-password"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              disabled={registerMutation.isLoading}
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                backgroundColor: open && severity === 'success' ? 'green' : 'blue',
-              }}
-            >
-              Zarejestruj się
-            </Button>
+          </Button>
 
-            <Grid container justifyContent="flex-start">
-              <Link href="/login" variant="body2">
-                Masz już konto? Zaloguj się
-              </Link>
-            </Grid>
-          </Box>
+          <Grid container justifyContent="flex-start">
+            <Link href="/login" variant="body2">
+              Masz już konto? Zaloguj się
+            </Link>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   )
 }

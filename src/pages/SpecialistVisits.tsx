@@ -122,6 +122,7 @@ function SpecialistVisits() {
             <ChevronLeftIcon />
           </IconButton>
         )}
+
         <p tw="text-center text-3xl font-bold">Rezerwacje</p>
         <IconButton onClick={() => setWeekOffset(weekOffset + 1)}>
           <ChevronRightIcon />
@@ -210,6 +211,10 @@ function SpecialistVisits() {
                                   reservation?.user.firstName +
                                   ' ' +
                                   reservation?.user.lastName +
+                                  ' - ' +
+                                  reservation?.user.phone +
+                                  ' - ' +
+                                  reservation?.user.email +
                                   ' - ' +
                                   moment(reservation?.timestamp).format('DD.MM.YYYY') +
                                   ' - ' +

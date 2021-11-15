@@ -4,7 +4,7 @@ import SignUp from '../components/SignUp'
 
 function Register() {
   return (
-    <div>
+    <div style={{ overflow: 'auto' }}>
       <Navbar />
       <SignUp />
     </div>

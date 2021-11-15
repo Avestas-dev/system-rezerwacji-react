@@ -63,8 +63,9 @@ function UserReservations() {
         </Alert>
       </Snackbar>
       <Navbar />
-      <p tw="font-bold text-center text-5xl mb-5 ">Rezerwacje użytkownika</p>
+      <p tw="text-center text-3xl font-bold pb-10">Rezerwacje użytkownika</p>
       <List tw="max-w-xl m-auto" sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        {data?.length === 0 && <p tw="text-center">Aktualnie użytkownik nie posiada rezerwacji.</p>}
         {data?.map((reservation: any, j: any) => (
           <ListItem
             key={j}

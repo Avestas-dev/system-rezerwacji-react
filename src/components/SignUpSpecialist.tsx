@@ -178,7 +178,7 @@ export default function SignUpSpecialist() {
                 backgroundColor: open && severity === 'success' ? 'green' : 'blue',
               }}
             >
-              Zarejestruj się
+              Dodaj specjalistę
             </Button>
           </Box>
         </Box>

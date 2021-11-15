@@ -20,6 +20,8 @@ const Specialists = () => {
         <>
           <Navbar />
           <Container marginBottom={10}>
+            <p tw="text-center text-3xl font-bold pb-10">Specialiści</p>
+
             <SpecialistsGrid data={data} />
           </Container>
         </>
